@@ -63,10 +63,7 @@ export class AuthService {
       process.env.MAX_SESSION_COUNT &&
       currentTokenCount > Number(process.env.MAX_SESSION_COUNT)
     ) {
-      // TODO: Replace this with a custom exception
-      throw new BadRequestException({
-        msg: 'Maximum number of concurrent sessions reached!',
-      });
+      await this.clearIssuedTokens(user.id);
     }
 
     // Generation of a new token which is then stored in the db
@@ -133,6 +130,15 @@ export class AuthService {
    */
   private async saveIssuedToken(userId: number, token: string): Promise<void> {
     await this.issuedTokenModel.create({ accessToken: token, userId });
+  }
+
+  /**
+   * Cleares the issued tokens for a user
+   * @param userId
+   * @private
+   */
+  private async clearIssuedTokens(userId: number): Promise<void> {
+    await this.issuedTokenModel.deleteMany({ userId });
   }
 
   /**
