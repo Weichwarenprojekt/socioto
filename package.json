@@ -1,0 +1,15 @@
+{
+  "name": "socioto",
+  "dependencies": {
+    "prettier": "^2.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Weichwarenprojekt/socioto.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/Weichwarenprojekt/socioto/issues"
+  },
+  "homepage": "https://github.com/Weichwarenprojekt/socioto#readme"
+}
