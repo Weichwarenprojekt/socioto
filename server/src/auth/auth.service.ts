@@ -21,14 +21,14 @@ export class AuthService {
   ) {}
 
   /**
-   * Authenticates a user
-   * @param username
-   * @param passwordHash
+   * Authenticates a user with the local database. The used hashing library is argon2
+   * @param username        The username of the authenticating user
+   * @param passwordHash    The password which is used for authentication
    */
   async authenticateUser(
     username: string,
     passwordHash: string,
-  ): Promise<User> {
+  ): Promise<User | null> {
     const user = await this.userService.getAuthInfo(username);
 
     if (!user) {
@@ -39,6 +39,7 @@ export class AuthService {
       user.hashedPassword,
       passwordHash,
     );
+
     if (passwordValue) {
       delete user.hashedPassword;
       return user;
@@ -49,7 +50,7 @@ export class AuthService {
 
   /**
    * Generates a new JWT for a user and inserts it additionally into the database
-   * @param user
+   * @param user  The user object which holds the user info
    */
   public async login(user: any): Promise<{ accessToken: string }> {
     const tokenPayload = {
@@ -116,7 +117,7 @@ export class AuthService {
 
   /**
    * Deletes an issued token from the database
-   * @param token
+   * @param token The token which is deleted
    */
   public async deleteIssuedToken(token: string): Promise<void> {
     await this.issuedTokenModel.deleteOne({ accessToken: token });
@@ -124,8 +125,8 @@ export class AuthService {
 
   /**
    * Saves an issued Token for a user in the database
-   * @param userId
-   * @param token
+   * @param userId  The id of the user
+   * @param token   The issued token
    * @private
    */
   private async saveIssuedToken(userId: number, token: string): Promise<void> {
@@ -134,7 +135,7 @@ export class AuthService {
 
   /**
    * Cleares the issued tokens for a user
-   * @param userId
+   * @param userId  The id of the user
    * @private
    */
   private async clearIssuedTokens(userId: number): Promise<void> {
@@ -143,7 +144,7 @@ export class AuthService {
 
   /**
    * Gets the number of currently valid tokens for a user
-   * @param userId
+   * @param userId  The id of the user
    * @private
    */
   private async getNumberOfIssuedTokens(userId: number): Promise<number> {

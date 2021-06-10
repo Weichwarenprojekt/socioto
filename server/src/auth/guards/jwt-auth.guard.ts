@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
-import { IS_PUBLIC_KEY } from './public.decorator';
-import { AuthService } from './auth.service';
+import { NO_AUTH } from '../decorators/no-auth.decorator';
+import { AuthService } from '../auth.service';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -20,12 +20,12 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   /**
-   * Route handler for routes
+   * Route handler for routes.
    * @param context The execution handler of the route
    */
   canActivate(context: ExecutionContext) {
     // Public routes don't need to be guarded
-    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+    const isPublic = this.reflector.getAllAndOverride<boolean>(NO_AUTH, [
       context.getHandler(),
       context.getClass(),
     ]);
@@ -42,7 +42,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
    *    2. Is the token valid?
    *
    * The request needs to have a Bearer authorization token
-   * @param context
+   * @param context The execution context of the request
    */
   async validateRequest(context: ExecutionContext): Promise<boolean> {
     const authorizationHeader = context

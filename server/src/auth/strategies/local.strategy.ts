@@ -1,7 +1,7 @@
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -11,8 +11,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
   /**
    * Validates the authentication data provided by the request
-   * @param username
-   * @param password
+   * @param username  The username of the user
+   * @param password  The password of the user
    */
   public async validate(
     username: string,

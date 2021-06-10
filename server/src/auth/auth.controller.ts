@@ -1,21 +1,21 @@
 import { Controller, Post, Put, Req, UseGuards } from '@nestjs/common';
-import { LocalAuthGuard } from './local-auth.guard';
+import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Request } from 'express';
 import { AuthService } from './auth.service';
-import { Public } from './public.decorator';
+import { NoAuth } from './decorators/no-auth.decorator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @UseGuards(LocalAuthGuard)
-  @Public()
+  @NoAuth()
   @Post('login')
   public async login(@Req() request: Request): Promise<any> {
     return this.authService.login(request.user);
   }
 
-  @Public()
+  @NoAuth()
   @Put('register')
   public async register(@Req() request: Request): Promise<any> {
     const username = request.body.username;
