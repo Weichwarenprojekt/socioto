@@ -1,5 +1,5 @@
 <template>
-    <div>Client Gallery</div>
+    <div>{{ $t("clientGallery.title") }}</div>
 </template>
 
 <script lang="ts">

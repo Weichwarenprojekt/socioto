@@ -8,20 +8,20 @@
             <!-- The actual form -->
             <div class="login-form">
                 <hr />
-                <span>Username</span>
+                <span>{{ $t("adminLogin.username") }}</span>
                 <input v-model="username" />
-                <span>Password</span>
+                <span>{{ $t("adminLogin.password") }}</span>
                 <input v-model="password" />
                 <hr />
                 <button class="login-confirm">
                     <i class="el-icon-check"></i>
-                    Confirm
+                    {{ $t("adminLogin.confirm") }}
                 </button>
             </div>
 
             <!-- Weichwarenprojekt --->
             <div class="login-powered-by">
-                powered by <br />
+                {{ $t("adminLogin.poweredBy") }} <br />
                 Weichwarenprojekt
             </div>
         </div>
