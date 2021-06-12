@@ -22,7 +22,7 @@
             <!-- Weichwarenprojekt --->
             <div class="login-powered-by">
                 {{ $t("adminLogin.poweredBy") }} <br />
-                Weichwarenprojekt
+                &copy; Weichwarenprojekt
             </div>
         </div>
     </div>
@@ -104,12 +104,6 @@ export default defineComponent({
 }
 
 @media only screen and (max-width: 1050px) {
-    .login-container {
-        transform: translateX(100px);
-    }
-}
-
-@media only screen and (max-width: 800px) {
     .login-container {
         transform: translateX(0);
     }
